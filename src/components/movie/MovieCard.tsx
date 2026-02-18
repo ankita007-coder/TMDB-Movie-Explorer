@@ -15,7 +15,7 @@ const MovieCard = ({ movie, onClick }: MovieCardProps) => {
       whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.2 }}
       onClick={onClick}
-      className="min-w-[180px] sm:min-w-[200px] cursor-pointer bg-surface rounded-lg overflow-hidden shadow-md hover:shadow-xl transition"
+      className="min-w-[180px] sm:min-w-[200px] cursor-pointer bg-surface rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
     >
       <div className="relative aspect-[2/3] bg-surface">
         {!loaded && (
