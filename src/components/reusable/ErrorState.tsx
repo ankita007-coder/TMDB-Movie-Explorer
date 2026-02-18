@@ -1,6 +1,6 @@
 
 interface ErrorStateProps{
-  message:string;
+  message?:string;
 }
 const ErrorState = ({message}:ErrorStateProps) => {
   return (
