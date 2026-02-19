@@ -8,8 +8,7 @@ const SearchPage = lazy(() => import("../pages/SearchPage"));
 
 const AppRoutes = () => {
   return (
-    <Suspense fallback={<Loading />}>
-      
+    <Suspense fallback={<Loading/>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />

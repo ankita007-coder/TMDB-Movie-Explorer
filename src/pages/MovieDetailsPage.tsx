@@ -1,11 +1,9 @@
 
 
-const MovieDetailsPage = () => {
+export default function MovieDetailsPage() {
   return (
     <div>
       movie details page
     </div>
   )
 }
-
-export default MovieDetailsPage

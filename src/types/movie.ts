@@ -11,6 +11,7 @@ export interface Movie{
     backdrop_path: string | null;
     vote_average: number;
     release_date: string;
+    
 }
 
 export interface MovieDetails extends Movie{
