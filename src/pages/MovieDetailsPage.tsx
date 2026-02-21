@@ -35,7 +35,7 @@ const MovieDetailsPage = () => {
           <div className="flex-1 space-y-6 mt-5">
             <h1 className="text-4xl font-bold">{movie?.title}</h1>
             <p className="text-lg font-semibold">"{movie?.tagline}"</p>
-            <p className="text-md p-1 text-gray-200">{movie?.vote_average} {movie?.runtime} {movie?.release_date.split('-')[2]} {movie?.genres.map(g => g.name).join(', ')}</p>
+            <p className="text-md p-1 text-gray-200">{movie?.vote_average.toFixed(1)} {movie?.runtime} {movie?.release_date.split('-')[2]} {movie?.genres.map(g => g.name).join(', ')}</p>
             <div className="h-6 w-1/2 bg-gray-800 rounded" />
             <p className="text-md text-gray-200">{movie?.overview}</p>
             

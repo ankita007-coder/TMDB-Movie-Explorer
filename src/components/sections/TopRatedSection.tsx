@@ -3,10 +3,8 @@ import MovieCard from "../movie/MovieCard";
 import { ErrorState, HorizontalScroll, Section } from "../reusable";
 import HorizontalSkeleton from "../reusable/HorizontalSkeleton";
 
-interface TopRatedSectionProps{
-    onMovieClick:(movieId:string)=>void;
-}
-export default function TopRatedSection({onMovieClick}:TopRatedSectionProps) {
+
+export default function TopRatedSection() {
   const { data, isLoading, error } = useTopRatedMovies();
 
   if (isLoading) return <HorizontalSkeleton />;
@@ -16,7 +14,7 @@ export default function TopRatedSection({onMovieClick}:TopRatedSectionProps) {
       <Section title="Top Rated">
         <HorizontalScroll>
           {data?.results.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} onClick={()=>onMovieClick(movie.id.toString())}/>
+            <MovieCard key={movie.id} movie={movie}/>
           ))}
         </HorizontalScroll>
       </Section>

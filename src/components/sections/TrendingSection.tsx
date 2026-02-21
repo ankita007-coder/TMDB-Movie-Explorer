@@ -3,10 +3,7 @@ import MovieCard from "../movie/MovieCard";
 import { ErrorState, HorizontalScroll, Section } from "../reusable";
 import HorizontalSkeleton from "../reusable/HorizontalSkeleton";
 
-interface TrendingSectionProps{
-    onMovieClick:(movieId:string)=>void;
-}
-export default function TrendingSection({onMovieClick}:TrendingSectionProps) {
+export default function TrendingSection() {
   const { data, isLoading, error } = useTrendingMovies();
 
   if (isLoading) return <HorizontalSkeleton />;
@@ -16,7 +13,7 @@ export default function TrendingSection({onMovieClick}:TrendingSectionProps) {
       <Section title="Trending">
         <HorizontalScroll>
           {data?.results.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} onClick={()=>onMovieClick(movie.id.toString())}/>
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </HorizontalScroll>
       </Section>
