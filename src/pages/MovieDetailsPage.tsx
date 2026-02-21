@@ -1,17 +1,17 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMovieDetails } from "../hooks/useMovieDetails";
-import { useMovieCredits } from "../hooks/useMovieCredits";
-import { useMovieProviders } from "../hooks/useMovieProviders";
-import { useSimilarMovies } from "../hooks/useSimilarMovies";
+// import { useMovieCredits } from "../hooks/useMovieCredits";
+// import { useMovieProviders } from "../hooks/useMovieProviders";
+// import { useSimilarMovies } from "../hooks/useSimilarMovies";
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const { data: movie } = useMovieDetails(id || "");
-  const { data: movieCredits } = useMovieCredits(id || "");
-  const { data: watchProviders } = useMovieProviders(id || "");
-  const { data: similarMovies } = useSimilarMovies(id || "");
+  // const { data: movieCredits } = useMovieCredits(id || "");
+  // const { data: watchProviders } = useMovieProviders(id || "");
+  // const { data: similarMovies } = useSimilarMovies(id || "");
 
-  console.log(movie)
+ 
   return (
     <div className="pt-16 bg-background text-white min-h-screen">
       {/* Backdrop Hero */}
