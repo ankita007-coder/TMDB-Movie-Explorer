@@ -25,6 +25,7 @@ export default function HorizontalMovieSection({
       <Section title={sectionName}>
         <HorizontalScroll>
           {data?.results.map((movie: any) => (
+            movie?.backdrop_path &&
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </HorizontalScroll>

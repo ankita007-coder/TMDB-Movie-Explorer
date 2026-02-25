@@ -1,4 +1,4 @@
-import { type Cast, type ApiResponse, type Movie, type MovieDetails, type WatchProvidersResponse } from "../types/movie"
+import { type ApiResponse, type Movie, type MovieDetails, type WatchProvidersResponse, type MovieCredits } from "../types/movie"
 import { tmdbClient } from "./tmdbClient"
 
 
@@ -33,7 +33,7 @@ export const getMovieDetails = async(movieId:string)=>{
 }
 
 export const getMovieCredits = async(movieId:string)=>{
-    const {data} = await tmdbClient.get<Cast[]>(`/movie/${movieId}/credits`)
+    const {data} = await tmdbClient.get<MovieCredits>(`/movie/${movieId}/credits`)
     return data
 }
 

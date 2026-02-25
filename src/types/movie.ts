@@ -53,3 +53,17 @@ export interface ApiResponse<T> {
   total_pages: number;
   total_results: number;
 }
+
+export interface CrewMember {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
+  profile_path: string | null;
+}
+
+export interface MovieCredits {
+  id: number;
+  cast: Cast[];
+  crew: CrewMember[];
+}
