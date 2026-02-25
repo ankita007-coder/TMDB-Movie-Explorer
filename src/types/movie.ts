@@ -67,3 +67,28 @@ export interface MovieCredits {
   cast: Cast[];
   crew: CrewMember[];
 }
+
+export type SearchResult = 
+  | SearchMovie
+  | SearchPerson;
+
+export interface SearchMovie {
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  release_date: string;
+  vote_average: number;
+  tagline: string;
+  media_type: "movie";
+}
+
+export interface SearchPerson{
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  media_type: 'person';
+  known_for: Movie[]
+}

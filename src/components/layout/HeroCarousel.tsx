@@ -27,12 +27,22 @@ const HeroCarousel = () => {
 
   const movie = movies[index];
 
-  if (!movie) return null;
   if (isLoading) {
-    <div className="w-full">
-      <Skeleton className="w-full h-[85vh] rounded-lg" />
-    </div>;
-  }
+  return (
+    <div className="relative h-[75vh] w-full overflow-hidden">
+      <Skeleton className="absolute inset-0 w-full h-full" />
+
+      <div className="absolute bottom-28 left-16 space-y-4">
+        <Skeleton className="h-12 w-[400px]" />
+        <Skeleton className="h-4 w-[500px]" />
+        <Skeleton className="h-4 w-[450px]" />
+        <Skeleton className="h-10 w-[160px]" />
+      </div>
+    </div>
+  );
+}
+
+  if (!movie) return null;
   return (
     <>
       <div

@@ -32,13 +32,14 @@ const MovieDetailsPage = () => {
       <BackdropHeroSection id={id || ""} crew={movieCredits?.crew || []} />
 
       {/* Cast Section */}
+
       <CastSection cast={movieCredits?.cast || []} />
 
       {/* Watch Providers Section */}
       {indiaProviders ? (
         <section className="max-w-7xl mx-auto px-6 py-8">
           <h2 className="text-2xl font-semibold mb-8">
-            Where to Watch (India)
+            Where to Watch in India
           </h2>
 
           {flatrate.length > 0 && (
@@ -90,7 +91,7 @@ const MovieDetailsPage = () => {
           )}
         </section>
       ) : (
-        <p className="font-bold text-2xl px-6 py-12">
+        <p className="max-w-7xl mx-auto px-6 py-8 font-bold text-2xl">
           Watch Providers Unavailable in India
         </p>
       )}

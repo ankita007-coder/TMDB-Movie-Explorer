@@ -14,7 +14,8 @@ export default function CastSection({cast}:CastSectionProps) {
       </h2>
 
       <div className="flex gap-6 overflow-x-auto scrollbar-hide">
-        {cast.slice(0,7).map((member) => (
+        {cast.slice(0,8).map((member) => (
+          member.profile_path &&
           <div
             key={member.id}
             className="min-w-[140px] flex-shrink-0"

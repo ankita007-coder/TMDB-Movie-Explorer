@@ -2,23 +2,33 @@ import { GoDotFill } from "react-icons/go";
 import { useMovieDetails } from "../../hooks/useMovieDetails";
 import type { CrewMember } from "../../types/movie";
 import { FaStar } from "react-icons/fa";
+import { Skeleton } from "../reusable";
 
 interface BackdropHeroSectionProps {
   id: string;
   crew: CrewMember[];
 }
 const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
-  const { data: movie } = useMovieDetails(id || "");
+  const { data: movie,isLoading } = useMovieDetails(id || "");
   const director = crew?.find(
     (member: CrewMember) => member.job === "Director",
   );
+  if(isLoading){
+    return <div className="relative h-[90vh] w-full">
+      <Skeleton className="absolute inset-0 h-[90vh] w-full"/>
+      <div className="relative z-10 max-w-7xl mx-auto px-12 py-10 flex gap-10">
+        <Skeleton className="w-[280px] h-[420px]"/>
+      </div>
+    </div>
+  }
   return (
     <>
-      <section className="relative h-[95vh] w-full bg-gray-900">
+      <section className="relative h-[90vh] w-full bg-gray-900">
         <img
           src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
           alt={movie?.title}
           className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
@@ -28,12 +38,13 @@ const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
           <img
             src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
             className="w-[280px] h-[420px] bg-gray-800 rounded-lg"
+            loading="lazy"
           />
 
           {/* Details Placeholder */}
           <div className="flex-1 space-y-6 mt-5">
             <h1 className="text-4xl font-bold">{movie?.title}</h1>
-            <p className="text-lg font-semibold">"{movie?.tagline}"</p>
+            {movie?.tagline &&<p className="text-lg font-semibold">"{movie?.tagline}"</p>}
             <p className="text-md p-1 text-gray-200 flex items-center gap-4">
               <span className="flex items-center gap-2">
                 <FaStar className="text-yellow-500" />{" "}
@@ -46,7 +57,7 @@ const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
                 {" "}
                 {movie?.genres.map((g) => (
                   <span key={g.id} className="flex items-center gap-1">
-                    <GoDotFill className="text-gray-400 text-sm" />{" "}
+                    <GoDotFill className="text-gray-500 text-sm" />{" "}
                     {g.name}{" "}
                   </span>
                 ))}
