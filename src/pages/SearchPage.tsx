@@ -3,6 +3,11 @@ import { useDebounce } from "../hooks/useDebounce";
 import { useSearchMulti } from "../hooks/useSearchMulti";
 import MovieCard from "../components/movie/MovieCard";
 import PersonCard from "../components/movie/PersonCard";
+import type {
+  SearchMovie,
+  SearchPerson,
+  SearchResult,
+} from "../types/movie";
 
 const SearchPage = () => {
   const [input, setInput] = useState("");
@@ -11,16 +16,23 @@ const SearchPage = () => {
 
   const { data, isLoading, error } = useSearchMulti(debouncedQuery);
 
-  const results = data?.results || [];
-  const movies = results.filter((item) => item?.media_type === "movie");
-  const people = results.filter((item) => item?.media_type === "person");
+  const results: SearchResult[] = data?.results || [];
+
+  const isMovie = (item: SearchResult): item is SearchMovie =>
+    item.media_type === "movie";
+
+  const isPerson = (item: SearchResult): item is SearchPerson =>
+    item.media_type === "person";
+
+  const movies = results.filter(isMovie);
+  const people = results.filter(isPerson);
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
+    <div className="max-w-7xl mx-auto px-6 py-20">
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Search movies or actors..."
-        className="w-[75vw] p-4 mt-20 rounded-md bg-gray-900 border border-gray-700 text-white outline-none"
+        className="block w-[75vw] mx-auto p-4 mt-12 rounded-md bg-gray-900 border border-gray-700 text-white outline-none"
       />
       {isLoading && (
         <div className="mt-10 text-gray-100 animate-pulse">Searching....</div>
@@ -33,11 +45,12 @@ const SearchPage = () => {
       {/* Movies Section */}
       {!isLoading && movies.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-2xl font-semibold mb-6">Movies</h2>
+          <h2 className="text-2xl font-semibold mb-6 px-6">Movies</h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-6">
             {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              movie.poster_path &&
+              <MovieCard key={movie.id} movie={movie} poster={true}/>
             ))}
           </div>
         </section>
@@ -46,9 +59,9 @@ const SearchPage = () => {
       {/* People Section */}
       {!isLoading && people.length > 0 && (
         <section className="mt-16">
-          <h2 className="text-2xl font-semibold mb-6">People</h2>
+          <h2 className="text-2xl font-semibold mb-6 px-6">People</h2>
 
-          <div className="flex gap-6 overflow-x-auto">
+          <div className="flex gap-6 overflow-x-auto p-6">
             {people.map((person) => (
               <PersonCard key={person.id} person={person} />
             ))}

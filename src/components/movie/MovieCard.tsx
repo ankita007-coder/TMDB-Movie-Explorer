@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMovieDetails } from "../../api/movieService";
 import type { Movie } from "../../types/movie";
+import { FaHeart } from "react-icons/fa";
 
 interface MovieCardProps {
   movie: Movie;
-  poster?:boolean;
+  poster?: boolean;
 }
 
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-const MovieCard = ({ movie,poster }: MovieCardProps) => {
+const MovieCard = ({ movie, poster }: MovieCardProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -32,7 +33,7 @@ const MovieCard = ({ movie,poster }: MovieCardProps) => {
 
   return (
     <motion.div
-      className={`relative group shrink-0 min-w-[170px] lg:min-w-[210px] rounded-md overflow-hidden cursor-pointer shadow-md ${poster?"aspect-[2/3] w-2":"aspect-[16/9]"}`}
+      className={`relative group shrink-0 min-w-[170px] lg:min-w-[210px] rounded-md overflow-hidden cursor-pointer shadow-md ${poster ? "aspect-[2/3] w-2" : "aspect-[16/9]"}`}
       whileHover={{ scale: 1.08 }}
       transition={{ duration: 0.25 }}
       onMouseEnter={handleMouseEnter}
@@ -43,13 +44,15 @@ const MovieCard = ({ movie,poster }: MovieCardProps) => {
     >
       {/* Poster */}
       <img
-        src={`${IMAGE_BASE}${poster?movie.poster_path:movie.backdrop_path}`}
+        src={`${IMAGE_BASE}${poster ? movie.poster_path : movie.backdrop_path}`}
         alt={movie.title}
         loading="lazy"
         decoding="async"
         className="w-full h-full object-cover"
       />
-
+      <div className="absolute top-2 right-2 text-2xl">
+        <FaHeart className="text-red-500" />
+      </div>
       {/* Hover Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
         <h3 className="text-lg font-semibold text-white line-clamp-2">

@@ -33,10 +33,10 @@ const HeroCarousel = () => {
       <Skeleton className="absolute inset-0 w-full h-full" />
 
       <div className="absolute bottom-28 left-16 space-y-4">
-        <Skeleton className="h-12 w-[400px]" />
-        <Skeleton className="h-4 w-[500px]" />
-        <Skeleton className="h-4 w-[450px]" />
-        <Skeleton className="h-10 w-[160px]" />
+        <Skeleton className="h-12 w-[200px]" />
+        <Skeleton className="h-12 w-[200px]" />
+        <Skeleton className="h-12 w-[200px]" />
+        <Skeleton className="h-12 w-[200px]" />
       </div>
     </div>
   );

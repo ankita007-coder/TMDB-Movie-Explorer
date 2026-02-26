@@ -88,7 +88,6 @@ export interface SearchPerson{
   id: number;
   name: string;
   profile_path: string | null;
-  known_for_department: string;
-  media_type: 'person';
-  known_for: Movie[]
+  known_for_department?: string;
+  media_type?: 'person';
 }
