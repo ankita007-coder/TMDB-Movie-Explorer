@@ -4,6 +4,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMovieDetails } from "../../api/movieService";
 import type { Movie } from "../../types/movie";
 import { FaHeart } from "react-icons/fa";
+import { useWatchList } from "../../hooks/useWatchList";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FiHeart } from "react-icons/fi";
 
 interface MovieCardProps {
   movie: Movie;
@@ -15,7 +18,9 @@ const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 const MovieCard = ({ movie, poster }: MovieCardProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { inWatchList, addToWatchList, removeFromWatchList } = useWatchList();
+  const isInWishList = inWatchList(movie.id);
   // Prefetch on hover
   const handleMouseEnter = () => {
     queryClient.prefetchQuery({
@@ -38,7 +43,6 @@ const MovieCard = ({ movie, poster }: MovieCardProps) => {
       transition={{ duration: 0.25 }}
       onMouseEnter={handleMouseEnter}
       onClick={() => {
-        console.log("Clicked");
         navigate(`/movie/${movie.id}`);
       }}
     >
@@ -50,9 +54,28 @@ const MovieCard = ({ movie, poster }: MovieCardProps) => {
         decoding="async"
         className="w-full h-full object-cover"
       />
-      <div className="absolute top-2 right-2 text-2xl">
-        <FaHeart className="text-red-500" />
-      </div>
+      <button
+        type="button"
+        className="z-30 text-2xl absolute top-3 right-3 p-2 rounded-full bg-black/50 backdrop-blur-md transition transform hover:scale-110 active:scale-95"
+        onClick={(e) => {
+          // stop the click from bubbling up to the parent card
+          e.stopPropagation();
+          e.preventDefault();
+          if (!isAuthenticated) {
+            loginWithRedirect();
+            return;
+          }
+
+          isInWishList ? removeFromWatchList(movie.id) : addToWatchList(movie);
+        }}
+      >
+        {isInWishList ? (
+          <FaHeart className="text-red-500" />
+        ) : (
+          <FiHeart className="text-red-500" />
+        )}
+      </button>
+      
       {/* Hover Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
         <h3 className="text-lg font-semibold text-white line-clamp-2">

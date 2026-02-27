@@ -1,25 +1,32 @@
 import { GoDotFill } from "react-icons/go";
 import { useMovieDetails } from "../../hooks/useMovieDetails";
 import type { CrewMember } from "../../types/movie";
-import { FaStar } from "react-icons/fa";
+import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
 import { Skeleton } from "../reusable";
+import { useWatchList } from "../../hooks/useWatchList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface BackdropHeroSectionProps {
   id: string;
   crew: CrewMember[];
 }
 const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
-  const { data: movie,isLoading } = useMovieDetails(id || "");
+  const { data: movie, isLoading } = useMovieDetails(id || "");
+  const {isAuthenticated,loginWithRedirect}=useAuth0()
+  const { inWatchList, removeFromWatchList, addToWatchList } = useWatchList();
+  const isInWatchList = inWatchList(Number(id));
   const director = crew?.find(
     (member: CrewMember) => member.job === "Director",
   );
-  if(isLoading){
-    return <div className="relative h-[90vh] w-full">
-      <Skeleton className="absolute inset-0 h-[90vh] w-full"/>
-      <div className="relative z-10 max-w-7xl mx-auto px-12 py-10 flex gap-10">
-        <Skeleton className="w-[280px] h-[420px]"/>
+  if (isLoading) {
+    return (
+      <div className="relative h-[90vh] w-full">
+        <Skeleton className="absolute inset-0 h-[90vh] w-full" />
+        <div className="relative z-10 max-w-7xl mx-auto px-12 py-10 flex gap-10">
+          <Skeleton className="w-[280px] h-[420px]" />
+        </div>
       </div>
-    </div>
+    );
   }
   return (
     <>
@@ -44,7 +51,9 @@ const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
           {/* Details Placeholder */}
           <div className="flex-1 space-y-6 mt-5">
             <h1 className="text-4xl font-bold">{movie?.title}</h1>
-            {movie?.tagline &&<p className="text-lg font-semibold">"{movie?.tagline}"</p>}
+            {movie?.tagline && (
+              <p className="text-lg font-semibold">"{movie?.tagline}"</p>
+            )}
             <p className="text-md p-1 text-gray-200 flex items-center gap-4">
               <span className="flex items-center gap-2">
                 <FaStar className="text-yellow-500" />{" "}
@@ -71,8 +80,22 @@ const BackdropHeroSection = ({ id, crew }: BackdropHeroSectionProps) => {
             <p className="text-md text-gray-200 w-2/3 line-clamp-3">
               {movie?.overview}
             </p>
-            <button className="bg-red-600 hover:bg-red-700 transition rounded-md font-medium flex justify-center items-center px-6 py-2">
-              + Add to Watchlist
+            <button
+              onClick={() => {
+                if (!isAuthenticated) {
+                  loginWithRedirect();
+                  return;
+                }
+
+                if (movie) {
+                  isInWatchList
+                    ? removeFromWatchList(Number(id))
+                    : addToWatchList(movie);
+                }
+              }}
+              className="bg-red-600 hover:bg-red-700 transition rounded-md font-medium flex justify-center items-center px-6 py-2"
+            >
+              {isInWatchList ? (<><FaCheck /> Added</>) : (<><FaPlus/> Add to Watchlist</>)}
             </button>
           </div>
         </div>
