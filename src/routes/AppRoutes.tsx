@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loading from "../pages/Loading";
 import { AnimatePresence } from "framer-motion";
+import WatchList from "../pages/WatchList";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const MovieDetailsPage = lazy(() => import("../pages/MovieDetailsPage"));
@@ -15,6 +16,7 @@ const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
+          <Route path="/watchlist" element={<WatchList/>}/>
         </Routes>
       </AnimatePresence>
     </Suspense>

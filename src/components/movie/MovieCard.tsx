@@ -4,9 +4,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMovieDetails } from "../../api/movieService";
 import type { Movie } from "../../types/movie";
 import { FaHeart } from "react-icons/fa";
-import { useWatchList } from "../../hooks/useWatchList";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import { FiHeart } from "react-icons/fi";
+import { useWatchList } from "../../context/WatchlistContext";
 
 interface MovieCardProps {
   movie: Movie;

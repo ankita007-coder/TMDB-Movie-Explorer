@@ -1,12 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth0 } from "@auth0/auth0-react";
+import { FaHeart } from "react-icons/fa";
+
+import { useEffect, useState } from "react";
+import { useWatchList } from "../../context/WatchlistContext";
 
 const Header = () => {
   const { isAuthenticated, isLoading, user, loginWithRedirect, logout } =
     useAuth0();
   const location = useLocation();
-
+  const { watchList } = useWatchList();
+  const [count,setCount] = useState(watchList.length)
+  useEffect(()=>{
+    setCount(watchList.length)
+  },[watchList])
+  
   return (
     <motion.header
       initial={{ y: -40, opacity: 0 }}
@@ -50,7 +59,15 @@ const Header = () => {
             Sign In
           </button>
         ) : (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            <Link to="/watchlist" className="relative group">
+              <FaHeart className="text-2xl text-white group-hover:text-red-500 transition" />
+              {count > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-semibold w-4 h-4 flex items-center justify-center rounded-full">
+                  {count}
+                </span>
+              )}
+            </Link>
             <img
               src={user?.picture}
               alt="profile"

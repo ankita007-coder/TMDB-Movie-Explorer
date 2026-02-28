@@ -20,7 +20,7 @@ const HeroCarousel = () => {
 
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % movies.length);
-    }, 6000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [movies.length, isHovered]);

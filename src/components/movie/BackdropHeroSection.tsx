@@ -3,8 +3,8 @@ import { useMovieDetails } from "../../hooks/useMovieDetails";
 import type { CrewMember } from "../../types/movie";
 import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
 import { Skeleton } from "../reusable";
-import { useWatchList } from "../../hooks/useWatchList";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useWatchList } from "../../context/WatchlistContext";
 
 interface BackdropHeroSectionProps {
   id: string;
