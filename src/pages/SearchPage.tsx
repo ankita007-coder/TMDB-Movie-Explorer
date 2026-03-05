@@ -49,7 +49,7 @@ const SearchPage = () => {
         placeholder="Search movies or actors..."
         className="block w-[75vw] mx-auto p-4 mt-12 rounded-md bg-gray-900 border border-gray-700 text-white outline-none"
       />
-      {isLoading && (
+      {isLoading && input!=="" && (
         <div className="mt-10 text-gray-100 animate-pulse">Searching....</div>
       )}
       {error && (
@@ -59,7 +59,7 @@ const SearchPage = () => {
       )}
 
       {
-        !isLoading && movies.length===0 && (
+        !isLoading && input!=="" && movies.length===0 && (
           <p>No movies/person found for "{`${debouncedQuery}`}"</p>
         )
       }
