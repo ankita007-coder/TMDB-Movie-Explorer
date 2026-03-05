@@ -57,6 +57,12 @@ const SearchPage = () => {
           Error while searching movies...
         </div>
       )}
+
+      {
+        !isLoading && movies.length===0 && (
+          <p>No movies/person found for "{`${debouncedQuery}`}"</p>
+        )
+      }
       {/* Movies Section */}
       {!isLoading && movies.length > 0 && (
         <section className="mt-12">
