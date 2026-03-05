@@ -12,11 +12,12 @@ import { useWatchList } from "../../context/WatchlistContext";
 interface MovieCardProps {
   movie: Movie;
   poster?: boolean;
+  onMovieClick?: ()=>void;
 }
 
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-const MovieCard = ({ movie, poster }: MovieCardProps) => {
+const MovieCard = ({ movie, poster,onMovieClick }: MovieCardProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { isAuthenticated, loginWithRedirect } = useAuth0();
@@ -45,6 +46,9 @@ const MovieCard = ({ movie, poster }: MovieCardProps) => {
       onMouseEnter={handleMouseEnter}
       onClick={() => {
         navigate(`/movie/${movie.id}`);
+        if(onMovieClick){
+          onMovieClick()
+        }
       }}
     >
       {/* Poster */}

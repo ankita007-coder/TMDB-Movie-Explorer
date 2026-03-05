@@ -6,4 +6,4 @@ export {default as Grid}from "./Grid"
 export {default as ErrorState} from "./ErrorState"
 export {default as Section} from "./Section";
 export {default as Skeleton}from "./Skeleton"
-
+export {default as Modal} from "./Modal"

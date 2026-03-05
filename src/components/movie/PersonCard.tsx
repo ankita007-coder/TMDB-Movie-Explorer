@@ -1,17 +1,23 @@
-import type { SearchPerson } from "../../types/movie";
+import type { SearchPerson, Cast } from "../../types/movie";
 
 
-interface PersonCardProps {
-  person: SearchPerson;
-}
+// if castSection is true we expect a Cast object, otherwise a SearchPerson
+type PersonCardProps =
+  | { castSection: true; person: Cast; handleOpen: (person: Cast) => void }
+  | { castSection: false; person: SearchPerson; handleOpen?: (person: SearchPerson) => void };
+
+
 
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
 
-const PersonCard = ({ person }: PersonCardProps) => {
-
+const PersonCard = (props: PersonCardProps) => {
+  const { person, handleOpen, castSection } = props;
 
   return (
-    <div className="min-w-[160px] cursor-pointer group">
+    <div
+      className="min-w-[160px] cursor-pointer group"
+      onClick={() => handleOpen?.(person as any)}
+    >
       <div className="w-[160px] h-[240px] rounded-lg overflow-hidden bg-gray-800 relative transition-transform duration-300 group-hover:scale-105">
         {person.profile_path ? (
           <img
@@ -33,7 +39,7 @@ const PersonCard = ({ person }: PersonCardProps) => {
         </p>
 
         <p className="text-xs text-gray-400 line-clamp-2">
-          {person.known_for_department}
+          {castSection ? (person as Cast).character : (person as SearchPerson).known_for_department}
         </p>
       </div>
     </div>

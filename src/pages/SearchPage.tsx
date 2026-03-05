@@ -8,6 +8,7 @@ import type {
   SearchPerson,
   SearchResult,
 } from "../types/movie";
+import PersonModal from "../components/movie/PersonModal";
 
 const SearchPage = () => {
   const [input, setInput] = useState("");
@@ -16,6 +17,20 @@ const SearchPage = () => {
 
   const { data, isLoading, error } = useSearchMulti(debouncedQuery);
 
+  const [selectedPerson, setSelectedPerson] = useState<SearchPerson | null>(
+    null,
+  );
+
+  const [isOpen,setIsOpen] = useState<boolean>(false)
+
+  const handleIsOpen=(person:SearchPerson)=>{
+    setSelectedPerson(person)
+    setIsOpen(true)
+  }
+  const handleClose=()=>{
+    setSelectedPerson(null)
+    setIsOpen(false)
+  }
   const results: SearchResult[] = data?.results || [];
 
   const isMovie = (item: SearchResult): item is SearchMovie =>
@@ -50,7 +65,7 @@ const SearchPage = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-6">
             {movies.map((movie) => (
               movie.poster_path &&
-              <MovieCard key={movie.id} movie={movie} poster={true}/>
+              <MovieCard key={movie.id} movie={movie} poster={true} />
             ))}
           </div>
         </section>
@@ -63,12 +78,17 @@ const SearchPage = () => {
 
           <div className="flex gap-6 overflow-x-auto p-6">
             {people.map((person) => (
-              <PersonCard key={person.id} person={person} />
+              <PersonCard
+                key={person.id}
+                person={person}
+                castSection={false}
+                handleOpen={handleIsOpen}
+                // no-op handler; clicking doesn't do anything here
+              />
             ))}
           </div>
         </section>
       )}
-
       {/* Empty State */}
       {!isLoading &&
         debouncedQuery &&
@@ -76,6 +96,7 @@ const SearchPage = () => {
         people.length === 0 && (
           <div className="mt-12 text-gray-400">No results found.</div>
         )}
+        <PersonModal isOpen={isOpen} handleClose={handleClose} selectedPerson={selectedPerson||null}/>
     </div>
   );
 };
